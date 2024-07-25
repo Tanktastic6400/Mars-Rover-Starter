@@ -36,9 +36,8 @@ class Rover {
             
 
          }else if(command.commandType === 'MODE_CHANGE'){
-            //Results.completed = true;
+            Results.completed = true;
             Results.roverStatus.mode = command.value;
-
             
             msgHandler.results.push(Results);
            
@@ -50,23 +49,24 @@ class Rover {
             if(Results.roverStatus.mode === 'LOW_POWER'){
                Results.completed = false;
                msgHandler.results.push(Results);
+               //console.log("check if falsey: " + Results.completed);
+
             }else if(Results.roverStatus.mode === 'NORMAL'){
                Results.completed = true;
                Results.roverStatus.position = command.value;
                
                msgHandler.results.push(Results);
             }
-          
-         }
+           
+         }//end of else if   
 
-         
-         
+      this.position = Results.roverStatus.position;
+      this.mode = Results.roverStatus.mode;
+      this.generatorWatts = Results.roverStatus.generatorWatts;
 
-
-         
       }//end of for
-
-
+      //console.log("out of loop: " + Results.completed);
+      
 
       return msgHandler;
    }

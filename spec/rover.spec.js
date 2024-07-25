@@ -19,6 +19,7 @@ let noMoveTestMsg = new Message("test low power movement", noMoveTestCmd);
 let moveMsg = new Message("testing moves positioning", moveCmd);
 
 let testRover = new Rover(6400);
+
 describe("Rover class", function() {
   //test 7
   test("constructor sets position and default values for mode and generatorWatts", function(){
@@ -63,7 +64,7 @@ describe("Rover class", function() {
       
       expect(tmp.completed).toBeTruthy();
     expect(tmp.roverStatus.mode).toBe('LOW_POWER');
-    tmp = testRover.receiveMessage(modeChangeMsg2).results[1];
+    tmp = testRover.receiveMessage(modeChangeMsg2).results[0];
     expect(tmp.roverStatus.mode).toBe('NORMAL');
 
   });
@@ -78,7 +79,7 @@ describe("Rover class", function() {
     
   });
   
-
+  
   //test 13
   test("responds with the position for the move command", function(){
     resetRoverDefaults(testRover);
