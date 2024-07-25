@@ -7,12 +7,14 @@ const Command = require('../command.js');
 let moveAndCheckCmds = [new Command("MOVE", 0), new Command('STATUS_CHECK')];
 let statusCheckCmd = [new Command("STATUS_CHECK")];
 let modeChangeCmd = [new Command("MODE_CHANGE", 'LOW_POWER')];
+let modeChangeCmd2 = [new Command("MODE_CHANGE", 'NORMAL')];
 let noMoveTestCmd = [new Command("MODE_CHANGE", 'LOW_POWER'), new Command("MOVE", 600)];
 let moveCmd = [new Command("MOVE", 7000)];
 
 let moveAndCheckMsg = new Message("Move and Check status", moveAndCheckCmds);
 let statusCheckMsg = new Message("Check Status", statusCheckCmd);
 let modeChangeMsg = new Message("change the mode", modeChangeCmd);
+let modeChangeMsg2 = new Message("change the mode back", modeChangeCmd2);
 let noMoveTestMsg = new Message("test low power movement", noMoveTestCmd);
 let moveMsg = new Message("testing moves positioning", moveCmd);
 
@@ -58,9 +60,11 @@ describe("Rover class", function() {
       resetRoverDefaults(testRover);
 
       let tmp = testRover.receiveMessage(modeChangeMsg).results[0];
-
+      
       expect(tmp.completed).toBeTruthy();
     expect(tmp.roverStatus.mode).toBe('LOW_POWER');
+    tmp = testRover.receiveMessage(modeChangeMsg2).results[1];
+    expect(tmp.roverStatus.mode).toBe('NORMAL');
 
   });
   //test 12

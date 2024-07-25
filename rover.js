@@ -33,17 +33,20 @@ class Rover {
             Results.completed = true;
             msgHandler.results.push(Results);
           
-            Results.completed = false;
+            
 
          }else if(command.commandType === 'MODE_CHANGE'){
-            Results.completed = true;
+            //Results.completed = true;
             Results.roverStatus.mode = command.value;
+
+            
             msgHandler.results.push(Results);
            
             
 
            //Results.completed = false;
          }else if(command.commandType === 'MOVE'){
+            
             if(Results.roverStatus.mode === 'LOW_POWER'){
                Results.completed = false;
                msgHandler.results.push(Results);
