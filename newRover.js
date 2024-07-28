@@ -44,7 +44,7 @@ class Rover {
                 if(tmpStatus.roverStatus.mode ==='LOW_POWER'){
                     tmpStatus.completed = false;
                     msgHandler.results.push(tmpStatus);
-                    
+                    console.log("I am inside this loop");
                 }else{
                     tmpStatus.completed = true;
                     tmpStatus.roverStatus.position = command.value;
@@ -55,7 +55,7 @@ class Rover {
                 
             }
 
-            Object.assign(this, tmpStatus);
+            Object.assign(currentStatus, tmpStatus);
           
 
         }
