@@ -49,7 +49,7 @@ class Rover {
             if(Results.roverStatus.mode === 'LOW_POWER'){
                Results.completed = false;
                msgHandler.results.push(Results);
-               //console.log("check if falsey: " + Results.completed);
+               
 
             }else if(Results.roverStatus.mode === 'NORMAL'){
                Results.completed = true;
@@ -60,9 +60,7 @@ class Rover {
            
          }//end of else if   
 
-      this.position = Results.roverStatus.position;
-      this.mode = Results.roverStatus.mode;
-      this.generatorWatts = Results.roverStatus.generatorWatts;
+     
 
       }//end of for
       //console.log("out of loop: " + Results.completed);

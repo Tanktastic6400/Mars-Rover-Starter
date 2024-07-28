@@ -1,4 +1,4 @@
-const Rover = require('../rover.js');
+const Rover = require('../newRover.js');
 const Message = require('../message.js');
 const Command = require('../command.js');
 
