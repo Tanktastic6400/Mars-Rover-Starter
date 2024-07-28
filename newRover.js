@@ -10,57 +10,39 @@ class Rover {
         let msgHandler = {
             message: message.name,
             results: []
-        }
+        };
+        
+        message.commands.forEach(command => {
+            let result = {
+                completed: false,
+            }
+            
+            if (command.commandType === 'STATUS_CHECK'){
+                result.completed = true;
+            }
+            else if (command.commandType === 'MODE_CHANGE'){
+                result.completed = true;
+                
+                this.mode = command.value;
+            }
+            else if (command.commandType === 'MOVE' && this.mode === 'NORMAL') {
 
-        let currentStatus = {
-            completed: false,
-            roverStatus: {
+                result.completed = true;
+                
+    
+                this.position = command.value;
+            }
+            
+            result.roverStatus = {
                 position: this.position,
                 mode: this.mode,
                 generatorWatts: this.generatorWatts
-            }
-        }
-
-        let command;
-       
-        for(let i = 0; i < message.commands.length; i++){
-            command = message.commands[i];
+            };
             
-
-            if(command.commandType === "STATUS_CHECK"){
-                
-                currentStatus.completed = true;
-                msgHandler.results.push(Object.create(currentStatus));
-
-                //tmpStatus = null;
-            }else if(command.commandType === "MODE_CHANGE"){
-                currentStatus.completed = true;
-                currentStatus.roverStatus.mode = command.value;
-                msgHandler.results.push(Object.create(currentStatus));
-                
-                //tmpStatus = null;
-            }else if(command.commandType === "MOVE"){
-                
-                if(currentStatus.roverStatus.mode ==='LOW_POWER'){
-                    currentStatus.completed = false;
-                    msgHandler.results.push(Object.create(currentStatus));
-                    console.log("I am inside this loop");
-                }else{
-                    currentStatus.completed = true;
-                    currentStatus.roverStatus.position = command.value;
-                    msgHandler.results.push(Object.create(currentStatus));
-                    
-                }
-                
-                
-            }
-
-            Object.assign(this, currentStatus);
+            // push result after all command parsing, to remove multiple usages of .push(result)
+            msgHandler.results.push(result);
+          })
           
-
-        }
-
-
         return msgHandler;
     }
 }
