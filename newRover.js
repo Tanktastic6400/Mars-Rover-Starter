@@ -22,40 +22,40 @@ class Rover {
         }
 
         let command;
-        let tmpStatus;
+       
         for(let i = 0; i < message.commands.length; i++){
             command = message.commands[i];
-            tmpStatus = Object.create(currentStatus);
+            
 
             if(command.commandType === "STATUS_CHECK"){
                 
-                tmpStatus.completed = true;
-                msgHandler.results.push(tmpStatus);
+                currentStatus.completed = true;
+                msgHandler.results.push(Object.create(currentStatus));
 
                 //tmpStatus = null;
             }else if(command.commandType === "MODE_CHANGE"){
-                tmpStatus.completed = true;
-                tmpStatus.roverStatus.mode = command.value;
-                msgHandler.results.push(tmpStatus);
-
+                currentStatus.completed = true;
+                currentStatus.roverStatus.mode = command.value;
+                msgHandler.results.push(Object.create(currentStatus));
+                
                 //tmpStatus = null;
             }else if(command.commandType === "MOVE"){
                 
-                if(tmpStatus.roverStatus.mode ==='LOW_POWER'){
-                    tmpStatus.completed = false;
-                    msgHandler.results.push(tmpStatus);
+                if(currentStatus.roverStatus.mode ==='LOW_POWER'){
+                    currentStatus.completed = false;
+                    msgHandler.results.push(Object.create(currentStatus));
                     console.log("I am inside this loop");
                 }else{
-                    tmpStatus.completed = true;
-                    tmpStatus.roverStatus.position = command.value;
-                    msgHandler.results.push(tmpStatus);
+                    currentStatus.completed = true;
+                    currentStatus.roverStatus.position = command.value;
+                    msgHandler.results.push(Object.create(currentStatus));
                     
                 }
                 
                 
             }
 
-            Object.assign(currentStatus, tmpStatus);
+            Object.assign(this, currentStatus);
           
 
         }
